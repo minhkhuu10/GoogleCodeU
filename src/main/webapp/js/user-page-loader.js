@@ -29,24 +29,6 @@ function setPageTitle() {
   document.title = parameterUsername + ' - User Page';
 }
 
-/**
- * Shows the message form if the user is logged in and viewing their own page.
- */
-function showMessageFormIfViewingSelf() {
-  fetch('/login-status')
-      .then((response) => {
-        return response.json();
-      })
-      .then((loginStatus) => {
-        if (loginStatus.isLoggedIn &&
-            loginStatus.username == parameterUsername) {
-          const messageForm = document.getElementById('message-form');
-          messageForm.classList.remove('hidden');
-        }
-      });
-      document.getElementById('about-me-form').classList.remove('hidden');
-}
-
 /** Fetches messages and add them to the page. */
 function fetchMessages() {
   const url = '/messages?user=' + parameterUsername;
@@ -106,6 +88,24 @@ function fetchAboutMe(){
     aboutMeContainer.innerHTML = aboutMe;
 
   });
+}
+
+/**
+ * Shows the message form if the user is logged in and viewing their own page.
+ */
+function showMessageFormIfViewingSelf() {
+  fetch('/login-status')
+      .then((response) => {
+        return response.json();
+      })
+      .then((loginStatus) => {
+        if (loginStatus.isLoggedIn &&
+            loginStatus.username == parameterUsername) {
+          const messageForm = document.getElementById('message-form');
+          messageForm.classList.remove('hidden');
+        }
+      });
+      document.getElementById('about-me-form').classList.remove('hidden');
 }
 
 /** Fetches data and populates the UI of the page. */
